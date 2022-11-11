@@ -4,27 +4,34 @@ const showRouter = Router();
 
 const {Show} = require("../models");
 
-showRouter.get('/shows' , async (req,res) => {
+showRouter.get('/' , async (req,res) => {
     res.send(await Show.findAll())
 })
-
-showRouter.get('/shows/:showId', async (req, res) => {
+showRouter.get('/:showId', async (req, res) => {
     res.send(await Show.findByPk(req.params.showId))
 })
 
-showRouter.get('/shows/genres/:genre', async (req, res) =>{ 
-    res.send(await Show.findOne(req.params.genre))
+showRouter.get('/genres/:genre', async (req, res) =>{ 
+    res.send(await Show.findAll({where: {genre:req.params.genre}}))
 })
 
-showRouter.put('/shows/:showId/watched', async (req, res) => {
-    res.send(Show)
+showRouter.put('/:showId/rating', async (req, res) => {
+    const watched = await Show.findByPk(req.params.showId)
+    await watched.update({rating: req.body.rating})
+    res.send("rating has been updated")
 })
 
-showRouter.put('/shows/:showId/updates', async (req, res) => {
-    res.send(req.body.status);
+showRouter.put('/:showId/updates', async (req, res) => {
+    const update = await Show.findByPk(req.params.showId)
+    if(update.status === "canceled"){
+        update.status = "on-going"
+    } else {
+        update.status = "canceled"
+    }
+    res.send("status updated")
 })
 
-showRouter.delete('/shows', (req, res) => {
+showRouter.delete('/:showId', (req, res) => {
     
 })
 
