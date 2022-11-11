@@ -1,6 +1,6 @@
 //express import
 const express = require('express');
-const db = require('./db/db');
+const {db} = require('./db/db');
 const seed = require('./seed')
 const userRouter = require('./routes/user');
 const showRouter = require('./routes/show');
