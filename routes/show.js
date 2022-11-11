@@ -31,8 +31,10 @@ showRouter.put('/:showId/updates', async (req, res) => {
     res.send("status updated")
 })
 
-showRouter.delete('/:showId', (req, res) => {
-    
+showRouter.delete('/:showId', async (req, res) => {
+   const remove = await Show.findByPk(req.params.showId);
+   await remove.destroy();
+   await res.send("show removed")
 })
 
 module.exports = showRouter;
