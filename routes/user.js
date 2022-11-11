@@ -8,16 +8,16 @@ userRouter.get('/users' , async (req,res) => {
     res.send(await User.findAll())
 })
 
-userRouter.get('/users', async (req, res) => {
-    res.send(await User.findOne())
+userRouter.get('/users/:userId', async (req, res) => {
+    res.send(await User.findOne(userId))
 })
 
-userRouter.get('/users/:id', async (req, res) => {
-    res.send(User[req.params.id])
+userRouter.get('/users/:userId/shows', async (req, res) => {
+    res.send(User[req.params.userId])
 })
 
-userRouter.put('/users', (req, res) => {
+userRouter.put('/users/:userId/shows/showId ', (req, res) => {
     res.send()
 } )
 
-module.exports = userRouter
+module.exports = userRouter;

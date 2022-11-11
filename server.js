@@ -1,23 +1,18 @@
 //express import
 const express = require('express');
 const db = require('./db/db');
-const {userRouter} = require('./routes/user');
-const {showRouter} = require('./routes/show');
+const seed = require('./seed')
+const userRouter = require('./routes/user');
+const showRouter = require('./routes/show');
 
 const app = express();
 
-function middle(req, res, next) {
-    try {
-        
-    } catch (error) {
-        res.status(404).send(error);
-    }
-}
 
-app.use(express.json)
-app.use('/users', middle, userRouter)
-app.use('/shows', middle, showRouter)
+app.use(express.json())
+app.use('/users', userRouter)
+app.use('/shows', showRouter)
 
-app.listen(3000, ()=>{
+app.listen(3000, async ()=>{
+    await seed()
     console.log('Listening on port 3000')
 })
